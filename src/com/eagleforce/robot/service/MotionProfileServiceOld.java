@@ -1,14 +1,14 @@
-package generate;
+package com.eagleforce.robot.service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import generate.model.MotionProfileConfiguration;
-import generate.model.MotionProfilePoint;
+import com.eagleforce.robot.model.MotionProfileConfiguration;
+import com.eagleforce.robot.model.MotionProfilePoint;
 
-public class Logic {
+public class MotionProfileServiceOld {
 
 	private static final String ROBOT_MAX_VELOCITY_KEY = "robot.specs.max-vel";
 	private static final String ROBOT_MAX_ACCELERATION_KEY = "robot.specs.max-acc";
@@ -38,8 +38,8 @@ public class Logic {
 	}
 
 	/*
-	 * public static void main(String[] args) { velcalc(); Logic app = new
-	 * Logic(); Properties props = app.getMotionProfileProps(); String maxAcc =
+	 * public static void main(String[] args) { velcalc(); MotionProfileService app = new
+	 * MotionProfileService(); Properties props = app.getMotionProfileProps(); String maxAcc =
 	 * props.getProperty(ROBOT_MAX_ACCELERATION_KEY);
 	 * System.out.println(maxAcc);
 	 * 
@@ -54,24 +54,26 @@ public class Logic {
 		}
 	}
 
-	public List<MotionProfilePoint> calc(MotionProfileConfiguration mpc) {
+	public List<MotionProfilePoint> generatePoints(MotionProfileConfiguration mpc) {
 		List<MotionProfilePoint> mppList = new ArrayList<>();
 		// static
-//		final double max_vel = 3;
-//		final double endDistance = 1.;
-//		final double interval = 10;
-//		final double max_acc = 15;
+		final double max_vel = mpc.getMaxVel();
+		final double endDistance = mpc.getEndDistance();
+		final double interval = mpc.getInterval();
+		final double max_acc = mpc.getMaxAcc();
 		int numPoints = 1000; // Math.round( time / interval);
 		// int maxSize = 10000;
 
+		final double t1 = (1. / (max_acc / 3000));
+		final double t2 = t1 / 2;
+		
 		// dynamic
+		double[] f1 = new double[numPoints];
 		double f2 = 0;
-		double t1 = (1. / (max_acc / 3000));
-		double t2 = t1 / 2;
+		
 		double pos = 0;
 		// double vel = 0;
 		double acc;
-		double[] f1 = new double[numPoints];
 		double[] velArray = new double[numPoints];
 
 		for (int i = 0; i < numPoints; i++) {
@@ -129,8 +131,8 @@ public class Logic {
 						+ truncateDecimal(endDistance, 2));
 			}
 
-			BigDecimal a = truncateDecimal(pos, 2);
-			BigDecimal b = truncateDecimal(endDistance, 2);
+//			BigDecimal a = truncateDecimal(pos, 2);
+//			BigDecimal b = truncateDecimal(endDistance, 2);
 			
 			
 //			

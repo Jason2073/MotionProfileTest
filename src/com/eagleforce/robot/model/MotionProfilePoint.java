@@ -1,4 +1,4 @@
-package generate.model;
+package com.eagleforce.robot.model;
 
 public class MotionProfilePoint {
 	

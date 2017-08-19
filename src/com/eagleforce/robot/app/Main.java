@@ -1,10 +1,8 @@
-package generate;
+package com.eagleforce.robot.app;
 
 public class Main {
 
 	public static void main(String[] args) {
-		Generate gen = new Generate();
-		gen.run();
-
+		new ApplicationRunner().run();
 	}
 }
